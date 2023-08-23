@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { ICommit } from 'src/core/interfaces/commit';
 
 @Injectable()
 export class CommitsService {
@@ -15,7 +16,7 @@ export class CommitsService {
 		})       
 	}
 
-	async getAll(repository: 'backend' | 'frontend' = 'backend') {
+	async getAll(repository: 'backend' | 'frontend' = 'backend'): Promise<ICommit[]> {
 		const githubEntity = 'repos';
 		const githubUsername = this.configService.get<string>('GITHUB_USERNAME');
 		const githubRepository = `gh-test-${ repository }`;
@@ -31,10 +32,10 @@ export class CommitsService {
 				}
 			);
 			
-			return response.json().then(data => {
-				return data.map(element => ({
+			return response.json().then(data => 
+				data.map(element => ({
 					sha: element.sha,
-					message: element['commit']['message'],
+					message: element.commit.message,
 					commitUrl: element.commit.url,
 					date: element.commit.author.date,
 					author: {
@@ -46,7 +47,7 @@ export class CommitsService {
 					}
 
 				}))
-			});
+			);
 
 		} catch (error) {
 			throw new InternalServerErrorException({
