@@ -1,5 +1,8 @@
+import { HttpService } from '@nestjs/axios';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { AxiosResponse } from 'axios';
+import { Observable, firstValueFrom } from 'rxjs';
 import { ICommit } from 'src/core/interfaces/commit';
 
 @Injectable()
@@ -7,7 +10,10 @@ export class CommitsService {
 	baseUrl: string;
 	headers = {};
 
-	constructor(private configService: ConfigService) {
+	constructor(
+		private configService: ConfigService,
+		private readonly httpService: HttpService,
+	) {
 		this.baseUrl = this.configService.get<string>('GITHUB_BASE_URL');
 		this.headers = {
 			'Authorization': `Bearer ${this.configService.get('GITHUB_ACCESS_TOKEN')}`,
@@ -23,15 +29,14 @@ export class CommitsService {
 			`${ githubEntity }/${ githubUsername }/${ githubRepository }/commits`,
 			this.baseUrl,
 		);
-		const response = await fetch(
-			url,
-			{
-				method: 'GET', headers: this.headers
-			}
-		);
-		
-		return response.json().then(data => 
-			data.map(element => ({
+
+		try {
+			const observable = this.httpService.get(url.href, {
+				headers: this.headers
+			});
+			const response = await firstValueFrom(observable);
+	
+			return response.data.map(element => ({
 				sha: element.sha,
 				message: element.commit.message,
 				commitUrl: element.commit.url,
@@ -43,17 +48,15 @@ export class CommitsService {
 					email: element.commit.author.email,
 					avatar: element.author.avatar_url
 				}
+	
+			}));
+		} catch (error) {
+			throw new InternalServerErrorException({
+				message: 'An error has ocurred',
+				error
+			})
+		}
 
-			}))
-		);
-		// try {
-
-		// } catch (error) {
-		// 	throw new InternalServerErrorException({
-		// 		message: 'An error has ocurred, please try again',
-		// 		error
-		// 	})
-		// }
 		
 	}
 }
