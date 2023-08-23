@@ -1,5 +1,6 @@
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { error } from 'console';
 import { ICommit } from 'src/core/interfaces/commit';
 
 @Injectable()
@@ -45,7 +46,9 @@ export class CommitsService {
 						avatar: element.author.avatar_url
 					}
 
-				}))
+				}), error => {
+					throw error;
+				})
 			);
 
 		} catch (error) {
