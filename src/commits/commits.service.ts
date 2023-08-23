@@ -5,15 +5,14 @@ import { ICommit } from 'src/core/interfaces/commit';
 @Injectable()
 export class CommitsService {
 	baseUrl: string;
-	headers: Headers;
+	headers = {};
 
 	constructor(private configService: ConfigService) {
 		this.baseUrl = this.configService.get<string>('GITHUB_BASE_URL');
-		this.headers = new Headers();
-		this.headers = new Headers({
+		this.headers = {
 			'Authorization': `Bearer ${this.configService.get('GITHUB_ACCESS_TOKEN')}`,
 			'Accept': 'application/vnd.github+json'
-		})       
+		};   
 	}
 
 	async getAll(repository: 'backend' | 'frontend' = 'backend'): Promise<ICommit[]> {
