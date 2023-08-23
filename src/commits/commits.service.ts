@@ -50,7 +50,8 @@ export class CommitsService {
 
 		} catch (error) {
 			throw new InternalServerErrorException({
-				message: 'An error has ocurred, please try again'
+				message: 'An error has ocurred, please try again',
+				error
 			})
 		}
 		
