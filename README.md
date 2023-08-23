@@ -69,6 +69,11 @@ https://localhost:3000
 https://api-commit-history.onrender.com
 
 
+## Swagger Documentation
+The api is documented following the openapi standard using Swagger,
+if you open the local or deployed url, and append **'/api'** (for example: https://localhost:3000/api) at the end, you will see the api documentation
+
+
 ## Endpoint
 
 | endpoint | method | description| response OK|
