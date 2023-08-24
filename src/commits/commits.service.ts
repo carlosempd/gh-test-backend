@@ -39,7 +39,7 @@ export class CommitsService {
 			return response.data.map(element => ({
 				sha: element.sha,
 				message: element.commit.message,
-				commitUrl: element.commit.url,
+				commitUrl: element.html_url,
 				date: element.commit.author.date,
 				author: {
 					id: element.author.id,
