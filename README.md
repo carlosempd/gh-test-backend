@@ -107,3 +107,15 @@ Author {
 	avatar: string,
 }
 ```
+
+## Docker Image
+
+ If you want to run this app only using the image generated from Dockerfile, check the dockerhub image
+ [here](https://hub.docker.com/repository/docker/carlosempd/gh-test-backend/general).
+
+ It has the documentation to mount this image in a container and run it.
+As you will see, in this case you will only need two files to run the app:
+- **.env**
+- **docker-compose.yaml**
+
+Or simply running `docker container run ...` as specified in the overview of the image (https://hub.docker.com/repository/docker/carlosempd/gh-test-backend/general). 
