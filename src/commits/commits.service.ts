@@ -1,8 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable, InternalServerErrorException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { AxiosResponse } from 'axios';
-import { Observable, firstValueFrom } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { ICommit } from 'src/core/interfaces/commit';
 
 @Injectable()
@@ -16,7 +15,6 @@ export class CommitsService {
 	) {
 		this.baseUrl = this.configService.get<string>('GITHUB_BASE_URL');
 		this.headers = {
-			'Authorization': `Bearer ${this.configService.get('GITHUB_ACCESS_TOKEN')}`,
 			'Accept': 'application/vnd.github+json'
 		};   
 	}

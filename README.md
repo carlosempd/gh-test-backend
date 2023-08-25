@@ -15,7 +15,6 @@ here is an example with all the required env variables
 ```
 GITHUB_BASE_URL='https://api.github.com'
 GITHUB_USERNAME='github_username'
-GITHUB_ACCESS_TOKEN='your_github_access_token'
 
 ```
 
@@ -23,7 +22,6 @@ GITHUB_ACCESS_TOKEN='your_github_access_token'
 | --- | --- | 
 | GITHUB_BASE_URL | Github base url to connect the API |
 | GITHUB_USERNAME | Github username, it is intended to only retrieve commmits for this project and this username |
-| GITHUB_ACCESS_TOKEN | Access token configured on your Github account |
 
 
 
