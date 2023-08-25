@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  app:
+    image: carlosempd/gh-test-backend
+    restart: always
+    ports:
+      - 3000:3000
+    environment:
+      - GITHUB_BASE_URL=${GITHUB_BASE_URL}
+      - GITHUB_USERNAME=${GITHUB_USERNAME}
